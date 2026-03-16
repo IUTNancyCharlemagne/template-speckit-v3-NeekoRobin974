@@ -1,50 +1,46 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: [ALL_CAPS_IDENTIFIER] -> 1.0.0
+- List of modified principles: Initial definition of PokéFusion principles.
+- Added sections: Core Principles (Local Image Processing, AI Integration, Separation of Concerns, Test-First, Simplicity & UX).
+- Removed sections: Placeholder tokens.
+- Templates requiring updates: 
+    - .specify/templates/plan-template.md (Checked: generic, no update needed)
+    - .specify/templates/spec-template.md (Checked: generic, no update needed)
+    - .specify/templates/tasks-template.md (Checked: generic, no update needed)
+- Follow-up TODOs: None.
+-->
+
+# PokéFusion Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Mobile-First Local Processing
+All initial image manipulations, specifically the superposition of two Pokémon sprites at 50% opacity, MUST be performed locally on the mobile device. This ensures immediate visual feedback and minimizes unnecessary network traffic for "draft" states.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. AI-Driven Generation (Img2Img)
+The final Pokémon fusion MUST be generated using the Hugging Face Img2Img API (specifically the `stable-diffusion-v1-5/stable-diffusion-v1-5` model). A fixed `strength` parameter of approximately 0.65 SHOULD be used to maintain a balance between the original sprites' silhouettes and the AI's creative output.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Strict Separation of Concerns
+The application architecture MUST strictly decouple the local mobile logic (image selection, local superposition, UI state) from the AI integration layer (API requests, payload formatting, response handling). This separation facilitates independent testing and potential future model swaps.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Test-First Mandatory
+All logic related to image processing (superposition algorithms) and API payload preparation MUST be covered by unit tests before implementation. This guarantees the reliability of the "draft" sent to the AI and the correct handling of external service data.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Seamless User Experience (UX)
+The workflow from Pokémon selection to final fusion MUST be fluid and intuitive. The transition between the local "brouillon" and the AI-generated final result should be handled with appropriate loading states to maintain perceived performance.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Technology Stack
+The project targets mobile platforms (Android/iOS) using a modern framework (e.g., React Native or Flutter). The AI component relies exclusively on the Hugging Face inference API.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Feature Implementation
+Every new feature or refinement must start with a specification that aligns with the Core Principles. Implementation follows the Red-Green-Refactor cycle, prioritizing the local processing logic before AI integration.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution supersedes all other informal practices within the PokéFusion project. Any amendments to these principles require a version bump and updated documentation. Compliance is verified during code reviews and automated testing gates.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-16 | **Last Amended**: 2026-03-16
