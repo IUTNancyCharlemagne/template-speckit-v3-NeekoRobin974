@@ -1,7 +1,7 @@
 # [NOM DU PROJET] — BUT S6 AppDevMobile 2025-2026
 
-> **Étudiant :** Prénom Nom
-> **Groupe :**
+> **Étudiant :** Mattéo Cadet
+> **Groupe :** DWM-1
 > **Agent IA utilisé :** Claude Code / Gemini CLI / Codex CLI / GitHub Copilot *(rayer les mentions inutiles)*
 
 ---
@@ -64,15 +64,17 @@ git push
 
 Suivez les phases speckit dans l'ordre, en utilisant les commandes slash de votre agent :
 
-| Commande | Phase | Livrable journal obligatoire |
-|---|---|---|
-| `/constitution` | Principes du projet | Oui |
-| `/specify` | Description fonctionnelle | Oui |
-| `/plan` | Architecture technique | Oui |
-| `/tasks` | Liste de tâches | Oui |
-| `/implement` | Implémentation | Oui (à chaque itération) |
+
+| Commande        | Phase                     | Livrable journal obligatoire |
+| --------------- | ------------------------- | ---------------------------- |
+| `/constitution` | Principes du projet       | Oui                          |
+| `/specify`      | Description fonctionnelle | Oui                          |
+| `/plan`         | Architecture technique    | Oui                          |
+| `/tasks`        | Liste de tâches          | Oui                          |
+| `/implement`    | Implémentation           | Oui (à chaque itération)   |
 
 **À chaque fin de phase, votre agent doit :**
+
 1. Écrire une entrée dans `journal/speckit-log.md`
 2. Committer et pusher le journal
 
@@ -100,6 +102,7 @@ Le journal `journal/speckit-log.md` est un élément central de l'évaluation.
 Il sera exploité lors de l'oral de soutenance : vous devrez défendre chaque décision que vous y avez documentée.
 
 **Critères d'évaluation de la démarche IA :**
+
 - Régularité et granularité des entrées
 - Qualité des justifications (décisions prises, alternatives écartées)
 - Pertinence et évolution des prompts utilisés
