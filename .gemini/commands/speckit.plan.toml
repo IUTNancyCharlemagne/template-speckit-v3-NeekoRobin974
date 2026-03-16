@@ -91,7 +91,6 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 - Use absolute paths
 - ERROR on gate failures or unresolved clarifications
-"""
 
 
 ---
@@ -167,3 +166,4 @@ git push
 > [!IMPORTANT]
 > Si le push échoue, signale-le à l'étudiant immédiatement. Ne pas ignorer l'erreur.
 > Un journal non pushé n'est pas visible par l'enseignant et sera considéré comme absent.
+"""

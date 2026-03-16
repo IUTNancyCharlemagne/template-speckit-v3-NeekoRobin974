@@ -201,7 +201,6 @@ Every task MUST strictly follow this format:
   - Within each story: Tests (if requested) → Models → Services → Endpoints → Integration
   - Each phase should be a complete, independently testable increment
 - **Final Phase**: Polish & Cross-Cutting Concerns
-"""
 
 
 ---
@@ -277,3 +276,4 @@ git push
 > [!IMPORTANT]
 > Si le push échoue, signale-le à l'étudiant immédiatement. Ne pas ignorer l'erreur.
 > Un journal non pushé n'est pas visible par l'enseignant et sera considéré comme absent.
+"""

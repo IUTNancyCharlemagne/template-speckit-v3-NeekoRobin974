@@ -199,7 +199,6 @@ Note: This command assumes a complete task breakdown exists in tasks.md. If task
         EXECUTE_COMMAND: {command}
         ```
     - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
-"""
 
 
 ---
@@ -275,3 +274,4 @@ git push
 > [!IMPORTANT]
 > Si le push échoue, signale-le à l'étudiant immédiatement. Ne pas ignorer l'erreur.
 > Un journal non pushé n'est pas visible par l'enseignant et sera considéré comme absent.
+"""

@@ -31,7 +31,6 @@ git config --get remote.origin.url
 
 > [!CAUTION]
 > UNDER NO CIRCUMSTANCES EVER CREATE ISSUES IN REPOSITORIES THAT DO NOT MATCH THE REMOTE URL
-"""
 
 
 ---
@@ -107,3 +106,4 @@ git push
 > [!IMPORTANT]
 > Si le push échoue, signale-le à l'étudiant immédiatement. Ne pas ignorer l'erreur.
 > Un journal non pushé n'est pas visible par l'enseignant et sera considéré comme absent.
+"""
