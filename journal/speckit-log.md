@@ -18,7 +18,7 @@
 - Adoption d'une approche "Mobile-First Local Processing" comme principe fondamental. Justification : Optimise les ressources réseau et améliore l'expérience utilisateur en traitant les étapes préliminaires en local.
 
 **Alternatives écartées :**
-- Fusion directe via l'IA sans étape de superposition locale → Raison : L'IA aurait moins de guidage structurel (silhouette) sur le résultat attendu, risquant des fusions moins cohérentes avec les deux Pokémon choisis.
+- Fusion directe via l'IA sans étape de superposition locale → Raison : L'IA aurait moins de guidage structurel (silhouette) on le résultat attendu, risquant des fusions moins cohérentes avec les deux Pokémon choisis.
 - Utilisation d'un paramètre `strength` plus élevé (> 0.8) → Raison : Le résultat s'éloignerait trop des Pokémon originaux, perdant l'aspect "fusion" reconnaissable.
 
 **Prompts clés utilisés (cités ou reformulés) :**
@@ -26,6 +26,27 @@
 
 **Difficultés rencontrées / ajustements effectués :**
 - Nécessité de clarifier la distinction entre "brouillon local" et "génération finale" dans les principes du projet pour assurer une architecture découplée.
+
+**Degré de validation par l'étudiant :**
+1. Résultat accepté sans modification
+
+---
+### Phase : specify — 2026-03-16 18:27
+
+**Décisions prises :**
+- Définition de trois User Stories prioritaires : (P1) Brouillon local, (P2) Génération AI, (P3) Gestion d'erreurs. Justification : Permet de découper le développement en étapes testables indépendamment, en commençant par le coeur de l'interaction utilisateur.
+- Inclusion de critères de succès mesurables (ex: génération AI en moins de 20s). Justification : Permet d'évaluer objectivement la performance de l'application et de l'intégration API.
+- Spécification des cas limites comme l'absence de sprite API ou les images locales trop grandes. Justification : Anticipe les problèmes de mémoire sur mobile et les limitations de la PokéAPI pour assurer la robustesse de l'MVP.
+
+**Alternatives écartées :**
+- Inclusion immédiate d'un système de sauvegarde Cloud → Raison : Trop complexe pour un MVP, la priorité est donnée à la génération locale et à l'appel IA.
+- Utilisation exclusive de PokéAPI → Raison : L'ajout des images locales augmente l'engagement utilisateur en permettant de fusionner ses propres captures.
+
+**Prompts clés utilisés (cités ou reformulés) :**
+> Rédige les spécifications de l'MVP de PokéFusion (en Flutter). L'UI doit inclure un écran pour sélectionner 2 Pokémon (via PokéAPI ou des images en locales), un aperçu de la superposition à 50% d'opacité en local, et un bouton "Fusionner". Prévois un écran de résultat avec un indicatieur de chargement pendant l'appel à l'API Hugging Face, ainsi que la gestion des erreurs.
+
+**Difficultés rencontrées / ajustements effectués :**
+- Ajustement des paramètres de l'API Hugging Face (strength 0.65) pour équilibrer créativité et fidélité, comme demandé dans la constitution.
 
 **Degré de validation par l'étudiant :**
 1. Résultat accepté sans modification
