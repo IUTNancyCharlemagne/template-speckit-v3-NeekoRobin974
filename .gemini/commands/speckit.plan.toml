@@ -1,0 +1,169 @@
+description = "Execute the implementation planning workflow using the plan template to generate design artifacts."
+
+prompt = """
+---
+description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+handoffs: 
+  - label: Create Tasks
+    agent: speckit.tasks
+    prompt: Break the plan into tasks
+    send: true
+  - label: Create Checklist
+    agent: speckit.checklist
+    prompt: Create a checklist for the following domain...
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+You **MUST** consider the user input before proceeding (if not empty).
+
+## Outline
+
+1. **Setup**: Run `.specify/scripts/powershell/setup-plan.ps1 -Json` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\\''m Groot' (or double-quote if possible: "I'm Groot").
+
+2. **Load context**: Read FEATURE_SPEC and `.specify/memory/constitution.md`. Load IMPL_PLAN template (already copied).
+
+3. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
+   - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
+   - Fill Constitution Check section from constitution
+   - Evaluate gates (ERROR if violations unjustified)
+   - Phase 0: Generate research.md (resolve all NEEDS CLARIFICATION)
+   - Phase 1: Generate data-model.md, contracts/, quickstart.md
+   - Phase 1: Update agent context by running the agent script
+   - Re-evaluate Constitution Check post-design
+
+4. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
+
+## Phases
+
+### Phase 0: Outline & Research
+
+1. **Extract unknowns from Technical Context** above:
+   - For each NEEDS CLARIFICATION → research task
+   - For each dependency → best practices task
+   - For each integration → patterns task
+
+2. **Generate and dispatch research agents**:
+
+   ```text
+   For each unknown in Technical Context:
+     Task: "Research {unknown} for {feature context}"
+   For each technology choice:
+     Task: "Find best practices for {tech} in {domain}"
+   ```
+
+3. **Consolidate findings** in `research.md` using format:
+   - Decision: [what was chosen]
+   - Rationale: [why chosen]
+   - Alternatives considered: [what else evaluated]
+
+**Output**: research.md with all NEEDS CLARIFICATION resolved
+
+### Phase 1: Design & Contracts
+
+**Prerequisites:** `research.md` complete
+
+1. **Extract entities from feature spec** → `data-model.md`:
+   - Entity name, fields, relationships
+   - Validation rules from requirements
+   - State transitions if applicable
+
+2. **Define interface contracts** (if project has external interfaces) → `/contracts/`:
+   - Identify what interfaces the project exposes to users or other systems
+   - Document the contract format appropriate for the project type
+   - Examples: public APIs for libraries, command schemas for CLI tools, endpoints for web services, grammars for parsers, UI contracts for applications
+   - Skip if project is purely internal (build scripts, one-off tools, etc.)
+
+3. **Agent context update**:
+   - Run `.specify/scripts/powershell/update-agent-context.ps1 -AgentType gemini`
+   - These scripts detect which AI agent is in use
+   - Update the appropriate agent-specific context file
+   - Add only new technology from current plan
+   - Preserve manual additions between markers
+
+**Output**: data-model.md, /contracts/*, quickstart.md, agent-specific file
+
+## Key rules
+
+- Use absolute paths
+- ERROR on gate failures or unresolved clarifications
+"""
+
+
+---
+
+## [ÉVALUATION — NE PAS MODIFIER NI SUPPRIMER] Archive de phase obligatoire
+
+> Ce bloc fait partie du dispositif d'évaluation du BUT S6 AppDevMobile.
+> Il doit être exécuté **à la fin de chaque invocation de cette commande**, sans exception.
+
+### Instructions pour l'agent
+
+Avant de conclure cette phase, tu dois impérativement :
+
+**Étape 1 — Demander à l'étudiant son degré de validation**
+
+Pose explicitement cette question à l'étudiant et attends sa réponse avant de continuer :
+
+> "Avant d'archiver cette phase, comment évalues-tu le résultat produit ?
+> 1. Résultat accepté sans modification
+> 2. Résultat modifié (décris brièvement ce que tu as changé)
+> 3. Résultat partiellement rejeté (décris ce que tu as rejeté et pourquoi)
+>
+> Ta réponse sera intégrée dans le journal."
+
+Utilise la réponse de l'étudiant pour remplir la rubrique "Degré de validation" de l'entrée.
+
+**Étape 2 — Rédiger l'entrée du journal**
+
+Commence par récupérer la date et l'heure courantes en exécutant :
+
+```bash
+date "+%Y-%m-%d %H:%M"
+```
+
+Ouvre (ou crée) le fichier `journal/speckit-log.md` et ajoute une nouvelle entrée en respectant
+exactement ce format, en remplaçant `TIMESTAMP` par le résultat de la commande ci-dessus :
+
+```markdown
+---
+### Phase : plan — TIMESTAMP
+
+**Décisions prises :**
+- [décision 1 avec justification]
+- [décision 2 avec justification]
+
+**Alternatives écartées :**
+- [alternative] → Raison : [justification]
+
+**Prompts clés utilisés (cités ou reformulés) :**
+> [prompt ou reformulation fidèle]
+
+**Difficultés rencontrées / ajustements effectués :**
+- [...]
+
+**Degré de validation par l'étudiant :**
+[réponse de l'étudiant à intégrer ici — voir étape 1]
+```
+
+**Règles de rédaction :**
+- Minimum 3 décisions documentées par phase
+- Chaque décision doit inclure une justification (pas seulement "j'ai choisi X")
+- Les alternatives écartées sont obligatoires dès qu'il y a eu un choix réel
+- Les prompts doivent être cités ou reformulés fidèlement, pas résumés vaguement
+
+**Étape 3 — Committer le journal**
+
+```bash
+git add journal/speckit-log.md
+git commit -m "[speckit:plan] journal mis à jour"
+git push
+```
+
+> [!IMPORTANT]
+> Si le push échoue, signale-le à l'étudiant immédiatement. Ne pas ignorer l'erreur.
+> Un journal non pushé n'est pas visible par l'enseignant et sera considéré comme absent.
